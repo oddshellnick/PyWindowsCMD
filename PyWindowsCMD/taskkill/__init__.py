@@ -1,5 +1,5 @@
-from typing import Optional
 from subprocess import Popen
+from typing import Optional, Union
 from PyWindowsCMD.taskkill.command import build_taskkill_command
 from PyWindowsCMD.taskkill.parameters import (
 	ImageName,
@@ -13,7 +13,7 @@ from PyWindowsCMD.taskkill.parameters import (
 def taskkill_windows(
 		taskkill_type: str,
 		remote_system: Optional[RemoteSystem] = None,
-		selectors: Optional[selector_type, list[selector_type]] = None,
+		selectors: Optional[Union[selector_type, list[selector_type]]] = None,
 ):
 	"""
 	Terminates processes on a local or remote Windows system using `taskkill`.
@@ -23,11 +23,7 @@ def taskkill_windows(
 	Args:
 		taskkill_type (str): The type of termination to perform (e.g., "/F" for forceful termination).  See `TaskKillType`.
 		remote_system (Optional[RemoteSystem]):  Specifies a remote system to execute the command on. Defaults to None.
-		selectors (Optional[selector_type, list[selector_type]]): One or more selectors to identify the processes to terminate. Defaults to None.
-
-	:Usage:
-		taskkill_windows(TaskKillType.force, selectors=ImageName("notepad.exe"))
-		taskkill_windows(TaskKillType.force, remote_system=RemoteSystem("192.168.1.100"), selectors=[ProcessID(1234), ProcessID(5678)])
+		selectors (Optional[Union[selector_type, list[selector_type]]]): One or more selectors to identify the processes to terminate. Defaults to None.
 	"""
 	Popen(
 			build_taskkill_command(
