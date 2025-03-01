@@ -16,9 +16,6 @@ class ShutdownType:
 		abort_shutting_down (str): Aborts a pending shutdown.
 		shutdown_without_warning (str): Shuts down without warning.
 		hibernate (str): Hibernates the computer.
-
-	:Usage:
-		shutdown_type = ShutdownType.shutdown
 	"""
 	
 	display_gui = "/i"
@@ -40,9 +37,6 @@ class ShutdownReasonType:
 		planned (str): Indicates a planned shutdown.
 		user_defined (str): Indicates a user-defined shutdown.
 		unplanned (str): Indicates an unplanned shutdown.
-
-	:Usage:
-		reason_type = ShutdownReasonType.planned
 	"""
 	
 	planned = "P:"
@@ -58,10 +52,6 @@ class ShutdownReason:
 		reason_type (str): The type of reason (planned, user-defined, or unplanned).
 		major_reason_number (int): The major reason code (0-255).
 		minor_reason_number (int): The minor reason code (0-65535).
-
-	:Usage:
-		reason = ShutdownReason(ShutdownReasonType.planned, 4, 2)
-		command_parameter = reason.get_command() # /d P:4:2
 	"""
 	
 	def __init__(
@@ -105,9 +95,5 @@ class ShutdownReason:
 
 		Returns:
 			str: The formatted reason string for the /d parameter.
-
-		:Usage:
-			reason = ShutdownReason(ShutdownReasonType.planned, 5, 10)
-			command_part = reason.get_command() # Returns "/d P:5:10"
 		"""
 		return f"/d {self.reason_type}{self.major_reason_number}:{self.minor_reason_number}"

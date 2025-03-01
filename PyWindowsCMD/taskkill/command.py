@@ -1,5 +1,5 @@
-from typing import Optional
 from PyWindowsCMD import errors
+from typing import Optional, Union
 from PyWindowsCMD.utilities import count_parameters
 from PyVarTools.python_instances_tools import get_class_attributes
 from PyWindowsCMD.taskkill.parameters import (
@@ -12,7 +12,7 @@ from PyWindowsCMD.taskkill.parameters import (
 def build_taskkill_command(
 		taskkill_type: str,
 		remote_system: Optional[RemoteSystem] = None,
-		selectors: Optional[selector_type, list[selector_type]] = None,
+		selectors: Optional[Union[selector_type, list[selector_type]]] = None,
 ) -> str:
 	"""
 	Constructs a Windows CMD command for terminating processes using `taskkill`.
@@ -20,7 +20,7 @@ def build_taskkill_command(
 	Args:
 		taskkill_type (str): The type of termination to perform (e.g., "/F" for forceful termination). See `TaskKillType` for options.
 		remote_system (Optional[RemoteSystem]): Specifies a remote system to execute the command on. Defaults to None.
-		selectors (Optional[selector_type, list[selector_type]]):  One or more selectors to identify processes to terminate. Defaults to None.
+		selectors (Optional[Union[selector_type, list[selector_type]]]):  One or more selectors to identify processes to terminate. Defaults to None.
 
 	Returns:
 		str: The constructed `taskkill` command string.

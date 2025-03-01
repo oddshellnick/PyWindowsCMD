@@ -32,10 +32,6 @@ def shutdown_windows(
 		force_running_applications_to_close (bool): Forces running applications to close without warning. Implied if `time_out_period` > 0. Defaults to False.
 		shutdown_reason (Optional[ShutdownReason]): The reason for the shutdown. Defaults to None.
 		comment (str): A comment explaining the shutdown (max 512 characters). Defaults to "".
-
-	:Usage:
-		shutdown_windows(ShutdownType.shutdown, time_out_period=60, comment="Performing maintenance")
-		shutdown_windows(ShutdownType.restart, target_computer="192.168.1.100")
 	"""
 	Popen(
 			build_shutdown_command(

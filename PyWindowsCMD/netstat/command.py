@@ -8,9 +8,6 @@ def build_netstat_routing_table_command() -> str:
 
 	Returns:
 		str: The constructed `netstat` command.
-
-	:Usage:
-		command = build_netstat_routing_table_command()  # netstat /r
 	"""
 	commands = ["netstat", "/r"]
 	
@@ -26,10 +23,6 @@ def build_netstat_per_protocol_statistics_command() -> str:
 
 	Raises:
 		WrongCommandLineParameter: If an invalid protocol is specified.
-
-	:Usage:
-		command = build_netstat_per_protocol_statistics_command("TCP") # netstat /s /p TCP
-		command = build_netstat_per_protocol_statistics_command() # netstat /s
 	"""
 	
 	commands = ["netstat", "/s"]
@@ -42,9 +35,6 @@ def build_netstat_ethernet_statistics_command() -> str:
 
 	Returns:
 		str: The constructed `netstat` command.
-
-	:Usage:
-		command = build_netstat_ethernet_statistics_command() # netstat /e
 	"""
 	commands = ["netstat", "/e"]
 	
@@ -81,9 +71,6 @@ def build_netstat_connections_list_command(
 
 	Raises:
 		WrongCommandLineParameter: If an invalid protocol is specified.
-
-	:Usage:
-		command = build_netstat_connections_list_command(show_all_ports=True, protocol="TCP") # netstat /n /q /p TCP
 	"""
 	commands = ["netstat", "/n"]
 	

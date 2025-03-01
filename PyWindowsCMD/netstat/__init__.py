@@ -27,9 +27,6 @@ def read_icmpv6_statistics(cmd_output: str) -> pandas.DataFrame:
 
 	Raises:
 		NetstatOutputError: If no ICMPv6 statistics are found in the output.
-
-	:Usage:
-		icmpv6_stats_df = read_icmpv6_statistics(netstat_output)
 	"""
 	icmpv6_statistics_table = re.search(
 			r"ICMPv6 Statistics(?:\r\n)+(.+?)(?:(?:\r\n){2}|\Z)",
@@ -65,9 +62,6 @@ def read_icmpv4_statistics(cmd_output: str) -> pandas.DataFrame:
 
 	Raises:
 		NetstatOutputError: If no ICMPv4 statistics are found in the output.
-
-	:Usage:
-		icmpv4_stats_df = read_icmpv4_statistics(netstat_output)
 	"""
 	icmpv4_statistics_table = re.search(
 			r"ICMPv4 Statistics(?:\r\n)+(.+?)(?:(?:\r\n){2}|\Z)",
@@ -103,9 +97,6 @@ def read_ipv6_statistics(cmd_output: str) -> pandas.DataFrame:
 
 	Raises:
 		NetstatOutputError: If no IPv6 statistics are found in the output.
-
-	:Usage:
-		ipv6_stats_df = read_ipv6_statistics(netstat_output)
 	"""
 	ipv6_statistics_table = re.search(
 			r"IPv6 Statistics(?:\r\n)+(.+?)(?:(?:\r\n){2}|\Z)",
@@ -137,9 +128,6 @@ def read_ipv4_statistics(cmd_output: str) -> pandas.DataFrame:
 
 	Raises:
 		NetstatOutputError: If no IPv4 statistics are found in the output.
-
-	:Usage:
-		ipv4_stats_df = read_ipv4_statistics(netstat_output)
 	"""
 	ipv4_statistics_table = re.search(
 			r"IPv4 Statistics(?:\r\n)+(.+?)(?:(?:\r\n){2}|\Z)",
@@ -171,9 +159,6 @@ def read_udp_ipv6_statistics(cmd_output: str) -> pandas.DataFrame:
 
 	Raises:
 		NetstatOutputError: If no UDP statistics for IPv6 are found in the output.
-
-	:Usage:
-		udp_ipv6_stats_df = read_udp_ipv6_statistics(netstat_output)
 	"""
 	udp_ipv6_statistics_table = re.search(
 			r"UDP Statistics for IPv6(?:\r\n)+(.+?)(?:(?:\r\n){2}|\Z)",
@@ -205,9 +190,6 @@ def read_udp_ipv4_statistics(cmd_output: str) -> pandas.DataFrame:
 
 	Raises:
 		NetstatOutputError: If no UDP statistics for IPv4 are found in the output.
-
-	:Usage:
-		udp_ipv4_stats_df = read_udp_ipv4_statistics(netstat_output)
 	"""
 	udp_ipv4_statistics_table = re.search(
 			r"UDP Statistics for IPv4(?:\r\n)+(.+?)(?:(?:\r\n){2}|\Z)",
@@ -239,9 +221,6 @@ def read_tcp_ipv6_statistics(cmd_output: str) -> pandas.DataFrame:
 
 	Raises:
 		NetstatOutputError: If no TCP statistics for IPv6 are found in the output.
-
-	:Usage:
-		tcp_ipv6_stats_df = read_tcp_ipv6_statistics(netstat_output)
 	"""
 	
 	tcp_ipv6_statistics_table = re.search(
@@ -274,9 +253,6 @@ def read_tcp_ipv4_statistics(cmd_output: str) -> pandas.DataFrame:
 
 	Raises:
 		NetstatOutputError: If no TCP statistics for IPv4 are found in the output.
-
-	:Usage:
-		tcp_ipv4_stats_df = read_tcp_ipv4_statistics(netstat_output)
 	"""
 	tcp_ipv4_statistics_table = re.search(
 			r"TCP Statistics for IPv4(?:\r\n)+(.+?)(?:(?:\r\n){2}|\Z)",
@@ -305,11 +281,6 @@ def read_per_protocol_statistics(cmd_output: str) -> dict[str, pandas.DataFrame]
 
 	Returns:
 		dict[str, pandas.DataFrame]: A dictionary containing DataFrames for each protocol's statistics.  Keys are "IPv4", "IPv6", "ICMPv4", "ICMPv6", "TCPv4", "TCPv6", "UDPv4", and "UDPv6".
-
-	:Usage:
-		stats_data = read_per_protocol_statistics(netstat_output)
-		ipv4_stats_df = stats_data["IPv4"]
-		tcpv6_stats_df = stats_data["TCPv6"]
 	"""
 	return {
 		"IPv4": read_ipv4_statistics(cmd_output),
@@ -334,12 +305,6 @@ def get_per_protocol_statistics(
 
 	Returns:
 		Union[pandas.DataFrame, dict[str, pandas.DataFrame]]:  The DataFrame containing statistics for the specified protocol or a dictionary of DataFrames for all protocols if None is provided.
-
-	:Usage:
-		# Get all per-protocol stats
-		all_stats = get_per_protocol_statistics()
-		# Get only TCPv6 stats
-		tcpv6_stats = get_per_protocol_statistics("TCPv6")
 	"""
 	if protocol is None:
 		return read_per_protocol_statistics(
@@ -380,10 +345,6 @@ def read_ipv6_routing_table(cmd_output: str) -> dict[str, pandas.DataFrame]:
 
 	Raises:
 		NetstatOutputError: If no IPv6 routing table is found in the output.
-
-	:Usage:
-		ipv6_routes = read_ipv6_routing_table(netstat_output)
-		active_routes_df = ipv6_routes["active_routes"]
 	"""
 	ipv6_routing_table = re.search(
 			r"IPv6 Route Table(?:\r\n)+={3,}\s+Active Routes:(?:\r\n)+(.+?)(?:={3,}|\Z)\s+Persistent Routes:(?:\r\n)+(.+?)(?:={3,}|\Z)",
@@ -417,11 +378,6 @@ def read_ipv4_routing_table(cmd_output: str) -> dict[str, pandas.DataFrame]:
 
 	Raises:
 		NetstatOutputError: If no IPv4 routing table is found in the output.
-
-	:Usage:
-		ipv4_routes = read_ipv4_routing_table(netstat_output)
-		active_routes_df = ipv4_routes["active_routes"]
-		persistent_routes_df = ipv4_routes["persistent_routes"]
 	"""
 	ipv4_routing_table = re.search(
 			r"IPv4 Route Table(?:\r\n)+={3,}\s+Active Routes:(?:\r\n)+(.+?)(?:={3,}|\Z)\s+Persistent Routes:(?:\r\n)+(.+?)(?:={3,}|\Z)",
@@ -437,7 +393,6 @@ def read_ipv4_routing_table(cmd_output: str) -> dict[str, pandas.DataFrame]:
 		persistent_routes = re.findall(
 				r"(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\s+(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\s+(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\s+(\d+)\s+",
 				ipv4_routing_table.group(2),
-				# Corrected group index to 2 for persistent routes
 		)
 	
 		return {
@@ -466,9 +421,6 @@ def read_interface_routing_table(cmd_output: str) -> pandas.DataFrame:
 
 	Raises:
 		NetstatOutputError: If no Interface List is found in the output.
-
-	:Usage:
-		interface_df = read_interface_routing_table(netstat_output)
 	"""
 	interface_routing_table = re.search(r"Interface List(?:\r\n)+(.+?)(?:={3,}|\Z)", cmd_output, re.DOTALL)
 	
@@ -492,12 +444,6 @@ def read_netstat_routing_tables(cmd_output: str) -> dict[str, Union[pandas.DataF
 
 	Returns:
 		dict[str, Union[pandas.DataFrame, dict[str, pandas.DataFrame]]]: A dictionary containing DataFrames for interfaces, IPv4 routes, and IPv6 routes. Keys are "interface_table", "ipv4_routing_table", and "ipv6_routing_table".
-
-	:Usage:
-		routing_data = read_netstat_routing_tables(netstat_output)
-		interface_df = routing_data["interface_table"]
-		ipv4_df = routing_data["ipv4_routing_table"]
-		ipv6_df = routing_data["ipv6_routing_table"]
 	"""
 	return {
 		"interface_table": read_interface_routing_table(cmd_output),
@@ -512,12 +458,6 @@ def get_netstat_routing_data() -> dict[str, Union[pandas.DataFrame, dict[str, pa
 
 	Returns:
 		dict[str, Union[pandas.DataFrame, dict[str, pandas.DataFrame]]]: A dictionary containing parsed routing tables (interfaces, IPv4, and IPv6).
-
-	:Usage:
-		routing_data = get_netstat_routing_data()
-		interface_df = routing_data["interface_table"]
-		ipv4_df = routing_data["ipv4_routing_table"]
-		ipv6_df = routing_data["ipv6_routing_table"]
 	"""
 	return read_netstat_routing_tables(
 			Popen(build_netstat_routing_table_command(), stdout=PIPE, shell=True) .communicate()[0] .decode("windows-1252", errors="ignore")
@@ -530,10 +470,6 @@ def get_netstat_ipv6_routing_data() -> dict[str, pandas.DataFrame]:
 
 	Returns:
 		dict[str, pandas.DataFrame]: A dictionary containing a DataFrame for active IPv6 routes.
-
-	:Usage:
-		ipv6_routes = get_netstat_ipv6_routing_data()
-		active_routes_df = ipv6_routes["active_routes"]
 	"""
 	return read_ipv6_routing_table(
 			Popen(build_netstat_routing_table_command(), stdout=PIPE, shell=True) .communicate()[0] .decode("windows-1252", errors="ignore")
@@ -546,11 +482,6 @@ def get_netstat_ipv4_routing_data() -> dict[str, pandas.DataFrame]:
 
 	Returns:
 		dict[str, pandas.DataFrame]: A dictionary containing DataFrames for active and persistent IPv4 routes.
-
-	:Usage:
-		ipv4_routes = get_netstat_ipv4_routing_data()
-		active_routes_df = ipv4_routes["active_routes"]
-		persistent_routes_df = ipv4_routes["persistent_routes"]
 	"""
 	return read_ipv4_routing_table(
 			Popen(build_netstat_routing_table_command(), stdout=PIPE, shell=True) .communicate()[0] .decode("windows-1252", errors="ignore")
@@ -563,9 +494,6 @@ def get_netstat_interface_routing_data() -> pandas.DataFrame:
 
 	Returns:
 		pandas.DataFrame: A DataFrame with MAC addresses and interface names.
-
-	:Usage:
-		interface_df = get_netstat_interface_routing_data()
 	"""
 	return read_interface_routing_table(
 			Popen(build_netstat_routing_table_command(), stdout=PIPE, shell=True) .communicate()[0] .decode("windows-1252", errors="ignore")
@@ -581,9 +509,6 @@ def read_netstat_connections_list(cmd_output: str) -> pandas.DataFrame:
 
 	Returns:
 		pandas.DataFrame: A DataFrame containing the parsed connection information. Columns may vary depending on the "netstat" command options used.
-
-	:Usage:
-		connections_df = read_netstat_connections_list(netstat_output)
 	"""
 	lines = list(filter(None, cmd_output.splitlines()))
 	
@@ -656,9 +581,6 @@ def get_netstat_connections_data(
 
 	Returns:
 		pandas.DataFrame: A DataFrame containing the parsed connection information.
-
-	:Usage:
-		connections_df = get_netstat_connections_data(show_all_ports=True, protocol="TCP")
 	"""
 	return read_netstat_connections_list(
 			Popen(
@@ -685,9 +607,6 @@ def get_localhost_processes_with_pids() -> dict[int, list[int]]:
 
 	Returns:
 		dict[int, list[int]]: A dictionary mapping PIDs to a list of their localhost ports.
-
-	:Usage:
-		processes_with_ports = get_localhost_processes_with_pids()
 	"""
 	netstat_connections = get_netstat_connections_data(show_all_ports=True, show_connection_pid=True)
 	netstat_connections = netstat_connections.loc[
@@ -711,9 +630,6 @@ def get_localhost_busy_ports() -> list[int]:
 
 	Returns:
 		list[int]: A list of busy localhost ports.
-
-	:Usage:
-		busy_ports = get_localhost_busy_ports()
 	"""
 	ports = get_netstat_connections_data(show_all_ports=True)
 	
@@ -734,9 +650,6 @@ def get_localhost_free_ports() -> list[int]:
 
 	Returns:
 		list[int]: A list of free localhost ports.
-
-	:Usage:
-		free_ports = get_localhost_free_ports
 	"""
 	busy_ports = get_localhost_busy_ports()
 	return list(set(range(1024, 49151)) - set(busy_ports))
@@ -755,13 +668,6 @@ def get_localhost_minimum_free_port(ports_to_check: Optional[Union[int, list[int
 
 	Raises:
 		ValueError: If "ports_to_check" is a list or set containing non-integer values.
-
-	:Usage:
-		# Find the minimum free port from a list of desired ports
-		min_free_port = get_localhost_minimum_free_port([8080, 8081, 8082])
-
-		# Find the minimum free port overall
-		min_free_port = get_localhost_minimum_free_port()
 	"""
 	localhost_free_ports = get_localhost_free_ports()
 	
@@ -786,9 +692,6 @@ def read_ethernet_statistics(cmd_output: str) -> pandas.DataFrame:
 
 	Returns:
 		pandas.DataFrame: A DataFrame containing the parsed ethernet statistics.
-
-	:Usage:
-		ethernet_stats_df = read_ethernet_statistics(netstat_output)
 	"""
 	interfaces = re.findall(r"([\w-]+(?: [\w-]+)*)\s{2,}(\d+)\s{2,}(\d*)", cmd_output)
 	
@@ -807,9 +710,6 @@ def get_ethernet_statistics() -> pandas.DataFrame:
 
 	Returns:
 		pandas.DataFrame: A DataFrame containing the parsed ethernet statistics.
-
-	:Usage:
-		ethernet_stats_df = get_ethernet_statistics()
 	"""
 	return read_ethernet_statistics(
 			Popen(build_netstat_ethernet_statistics_command(), stdout=PIPE, shell=True) .communicate()[0] .decode("windows-1252", errors="ignore")

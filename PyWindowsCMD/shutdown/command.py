@@ -43,10 +43,6 @@ def build_shutdown_command(
 
 	Raises:
 		WrongCommandLineParameter: If invalid parameter combinations or values are provided.
-
-	:Usage:
-		command = cmd_shutdown_windows(ShutdownType.shutdown, time_out_period=60, comment="Performing maintenance")
-		command = cmd_shutdown_windows(ShutdownType.restart, target_computer="192.168.1.100")
 	"""
 	if (
 			count_parameters(

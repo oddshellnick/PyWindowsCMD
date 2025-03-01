@@ -12,10 +12,6 @@ class ProcessFilter:
 
 	Attributes:
 		filter_name (str): The filter expression.
-
-	:Usage:
-		process_filter = ProcessFilter("STATUS eq RUNNING")
-		command_parameter = process_filter.get_command()
 	"""
 	
 	def __init__(self, filter_name: str, filter_operator: str, filter_value: str):
@@ -44,11 +40,6 @@ class ProcessFilter:
 class WindowTitleProcessFilter(ProcessFilter):
 	"""
 	Filters processes by their window title.
-
-	:Usage:
-		window_title_filter = WindowTitleProcessFilter("eq", "Untitled - Notepad")
-		command_parameter = window_title_filter.get_command() # /FI "WINDOWTITLE eq Untitled - Notepad"
-
 	"""
 	
 	def __init__(self, operator: Literal["eq", "ne"], value: str):
@@ -77,11 +68,6 @@ class WindowTitleProcessFilter(ProcessFilter):
 class UsernameProcessFilter(ProcessFilter):
 	"""
 	Filters processes by their username.
-
-	:Usage:
-
-		username_filter = UsernameProcessFilter("eq", "testuser", "domain")
-		command_parameter = username_filter.get_command() # /FI "USERNAME eq domain\testuser"
 	"""
 	
 	def __init__(self, operator: Literal["eq", "ne"], username: str, domain: str = ""):
@@ -118,9 +104,6 @@ class TaskKillTypes:
 	Attributes:
 		terminate (str): Sends a termination signal to the process.
 		forcefully_terminate (str): Forcefully terminates the process.
-
-	:Usage:
-		kill_type = TaskKillType.forcefully_terminate
 	"""
 	
 	terminate = "/T"
@@ -130,10 +113,6 @@ class TaskKillTypes:
 class StatusProcessFilter(ProcessFilter):
 	"""
 	Filters processes by their status.
-
-	:Usage:
-		status_filter = StatusProcessFilter("eq", "RUNNING")
-		command_parameter = status_filter.get_command() # /FI "STATUS eq RUNNING"
 	"""
 	
 	def __init__(
@@ -167,10 +146,6 @@ class StatusProcessFilter(ProcessFilter):
 class SessionProcessFilter(ProcessFilter):
 	"""
 	Filters processes by their session ID.
-
-	:Usage:
-		session_filter = SessionProcessFilter("eq", 2)
-		command_parameter = session_filter.get_command() # /FI "SESSION eq 2"
 	"""
 	
 	def __init__(
@@ -199,10 +174,6 @@ class SessionProcessFilter(ProcessFilter):
 class ServicesProcessFilter(ProcessFilter):
 	"""
 	Filters processes by their associated services.
-
-	:Usage:
-		services_filter = ServicesProcessFilter("eq", "Spooler")
-		command_parameter = services_filter.get_command() # /FI "SERVICES eq Spoole"
 	"""
 	
 	def __init__(self, operator: Literal["eq", "ne"], value: str):
@@ -232,10 +203,6 @@ class UserContext:
 		username (str): The username.
 		domain (Optional[str]): The domain. Defaults to "".
 		password (Optional[str]): The password.  If None, no password is used. If "", prompts for password. Defaults to None.
-
-	:Usage:
-		user_context = UserContext("administrator", "mydomain", "password123")
-		command_parameter = user_context.get_command()
 	"""
 	
 	def __init__(self, username: str, domain: str = "", password: Optional[str] = None):
@@ -257,10 +224,6 @@ class UserContext:
 
 		Returns:
 			str: The formatted user context string.
-
-		:Usage:
-			context = UserContext("user", "domain", "pass")
-			command_part = context.get_command() # /U domain\\user /P pass
 		"""
 		domain = f"{self.domain}\\" if self.domain else ""
 		
@@ -281,10 +244,6 @@ class RemoteSystem:
 	Attributes:
 		remote_system (str): The name or IP address of the remote system.
 		user_context (UserContext, optional): The user context for accessing the remote system. Defaults to None.
-
-	:Usage:
-		remote_system = RemoteSystem("192.168.1.100", UserContext("admin", "domain", "password"))
-		command_parameter = remote_system.get_command()
 	"""
 	
 	def __init__(self, remote_system: str, user_context: UserContext | None = None,):
@@ -304,10 +263,6 @@ class RemoteSystem:
 
 		Returns:
 			str: The formatted remote system string.
-
-		:Usage:
-			remote = RemoteSystem("server", UserContext("user", "domain"))
-			command_part = remote.get_command() # /S server /U domain\\user
 		"""
 		user_context = "" if self.user_context is None else f" {self.user_context.get_command()}"
 		return f"/S {self.remote_system}{user_context}"
@@ -319,10 +274,6 @@ class ProcessID:
 
 	Attributes:
 	   process_id (int): The process ID.
-
-	:Usage:
-		process_id = ProcessID("1234")
-		command_parameter = process_id.get_command()
 	"""
 	
 	def __init__(self, process_id: int):
@@ -341,10 +292,6 @@ class ProcessID:
 class PIDProcessFilter(ProcessFilter):
 	"""
 	Filters processes by their process ID (PID).
-
-	:Usage:
-		pid_filter = PIDProcessFilter("gt", 1000)
-		command_parameter = pid_filter.get_command() # /FI "PID gt 1000"
 	"""
 	
 	def __init__(
@@ -373,11 +320,6 @@ class PIDProcessFilter(ProcessFilter):
 class ModulesProcessFilter(ProcessFilter):
 	"""
 	Filters processes by their loaded modules.
-
-	:Usage:
-		modules_filter = ModulesProcessFilter("eq", "user32.dll")
-		command_parameter = modules_filter.get_command() # /FI "MODULES eq user32.dll"
-
 	"""
 	
 	def __init__(self, operator: Literal["eq", "ne"], value: str):
@@ -402,10 +344,6 @@ class ModulesProcessFilter(ProcessFilter):
 class MemoryUsageProcessFilter(ProcessFilter):
 	"""
 	Filters processes by their memory usage.
-
-	:Usage:
-		memory_filter = MemoryUsageProcessFilter("gt", "500000") # Greater than 500000 KB
-		command_parameter = memory_filter.get_command() # /FI "MEMUSAGE gt 500000"
 	"""
 	
 	def __init__(
@@ -438,10 +376,6 @@ class MemoryUsageProcessFilter(ProcessFilter):
 class ImageNameProcessFilter(ProcessFilter):
 	"""
 	Filters processes by their image name.
-
-	:Usage:
-		image_name_filter = ImageNameProcessFilter("eq", "chrome.exe")
-		command_parameter = image_name_filter.get_command() # /FI "IMAGENAME eq chrome.exe"
 	"""
 	
 	def __init__(self, operator: Literal["eq", "ne"], value: str):
@@ -469,10 +403,6 @@ class ImageName:
 
 	Attributes:
 		image_name (str): The image name (e.g., "notepad.exe").
-
-	:Usage:
-		image_name = ImageName("chrome.exe")
-		command_parameter = image_name.get_command()
 	"""
 	
 	def __init__(self, image_name: str):
@@ -497,10 +427,6 @@ class ImageName:
 class CPUTimeProcessFilter(ProcessFilter):
 	"""
 	Filters processes by their CPU time usage.
-
-	:Usage:
-		cpu_time_filter = CPUTimeProcessFilter("gt", 0, 15, 0) # Greater than 15 minutes
-		command_parameter = cpu_time_filter.get_command() # /FI "CPUTIME gt 0:15:0"
 	"""
 	
 	def __init__(
